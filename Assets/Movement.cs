@@ -10,15 +10,20 @@ public class Movement : MonoBehaviour {
     private bool collided = false;
     private float playerOffset;
     private Rigidbody2D rb;
+    private Collider2D col;
     private Vector3 movement;
     private float screenLeftEdge, screenRightEdge;
 
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
         screenLeftEdge = cam.ViewportToWorldPoint(new Vector3(0, 0, cam.nearClipPlane)).x;
         screenRightEdge = cam.ViewportToWorldPoint(new Vector3(1, 1, cam.nearClipPlane)).x;
-        playerOffset = transform.right.x * (transform.localScale.x / 2.0f);
+        //playerOffset = transform.right.x * (transform.localScale.x / 2f);
+        //print("Transform.right.x: " + transform.right.x);
+        //print("Transform.localScale.x: " + transform.localScale.x);
+        //print("Transform.position.x: " + transform.position.x);
 
     }
 	
@@ -35,15 +40,16 @@ public class Movement : MonoBehaviour {
         rb.AddForce(movement * speed);
 
         // clamp to screen
-        float playerLeftEdge = transform.position.x - playerOffset;
-        float playerRightEdge = transform.position.x + playerOffset;
+        float playerLeftEdge = col.bounds.min.x;
+        float playerRightEdge = col.bounds.max.x;
+        float playerXOffset = col.bounds.extents.x;
         if (playerLeftEdge <= screenLeftEdge) {
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
-            rb.position = new Vector3(screenLeftEdge + playerOffset, rb.position.y, 0);
+            rb.position = new Vector3(screenLeftEdge + playerXOffset, rb.position.y, 0);
         }
         if (playerRightEdge >= screenRightEdge) {
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
-            rb.position = new Vector3(screenRightEdge - playerOffset, rb.position.y, 0);
+            rb.position = new Vector3(screenRightEdge - playerXOffset, rb.position.y, 0);
         }
 
     }
