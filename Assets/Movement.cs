@@ -20,14 +20,10 @@ public class Movement : MonoBehaviour {
         col = GetComponent<Collider2D>();
         screenLeftEdge = cam.ViewportToWorldPoint(new Vector3(0, 0, cam.nearClipPlane)).x;
         screenRightEdge = cam.ViewportToWorldPoint(new Vector3(1, 1, cam.nearClipPlane)).x;
-        //playerOffset = transform.right.x * (transform.localScale.x / 2f);
-        //print("Transform.right.x: " + transform.right.x);
-        //print("Transform.localScale.x: " + transform.localScale.x);
-        //print("Transform.position.x: " + transform.position.x);
 
     }
 	
-	//Update is called once per frame
+	// Update is called once per frame
     void Update() {
         movement = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
         if (Input.GetButton("Jump") && collided) {
@@ -35,13 +31,14 @@ public class Movement : MonoBehaviour {
         }
     }
 
-    //FixedUpdate is called at a constant rate independent of framerate
+    // FixedUpdate is called at a constant rate independent of framerate
 	void FixedUpdate () {
         rb.AddForce(movement * speed);
 
         // clamp to screen
         float playerLeftEdge = col.bounds.min.x;
         float playerRightEdge = col.bounds.max.x;
+        // extents is always half the size of the object
         float playerXOffset = col.bounds.extents.x;
         if (playerLeftEdge <= screenLeftEdge) {
             rb.velocity = new Vector3(0, rb.velocity.y, 0);
@@ -55,6 +52,17 @@ public class Movement : MonoBehaviour {
     }
     void OnCollisionEnter2D(Collision2D collision) {
         print("Entered collision");
+        if (collision.collider.name.Equals("Crate(Clone)") ){
+            float playerTopEdge = col.bounds.max.y;
+            float playerLeftEdge = col.bounds.min.x;
+            float playerRightEdge = col.bounds.max.x;
+            ContactPoint2D contact = collision.contacts[0];
+            if (contact.point.y == playerTopEdge) {
+               print("Top collision");
+               Time.timeScale = 0;
+            }
+            //if side
+        }
         collided = true;
     }
     void OnCollisionStay2D(Collision2D collision) {
