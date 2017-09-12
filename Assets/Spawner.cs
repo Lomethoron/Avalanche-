@@ -16,12 +16,15 @@ public class Spawner : MonoBehaviour {
         rand = new System.Random();
         screenLeftEdge = cam.ViewportToWorldPoint(new Vector3(0, 0, cam.nearClipPlane)).x;
         screenRightEdge = cam.ViewportToWorldPoint(new Vector3(1, 1, cam.nearClipPlane)).x;
-        
+        screenTopEdge = cam.ViewportToWorldPoint(new Vector3(1, 1, cam.nearClipPlane)).y;
+
+
     }
 	
 	// Update is called once per frame
 	void Update () {
-        screenTopEdge = Math.Max(screenTopEdge, cam.ViewportToWorldPoint(new Vector3(1, 1, cam.nearClipPlane)).x);
+        screenTopEdge = Math.Max(screenTopEdge, cam.ViewportToWorldPoint(new Vector3(1, 1, cam.nearClipPlane)).y);
+        print("Boxes spawning at: " + screenTopEdge);
         int spawnValue = rand.Next(0, 40);
         //0,1 no cubes, 3 one cube, 4 two cubes
         for( spawnValue = Math.Max(spawnValue-38, 0); spawnValue > 0; spawnValue--) {
