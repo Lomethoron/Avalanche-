@@ -51,18 +51,6 @@ public class Movement : MonoBehaviour {
 
     }
     void OnCollisionEnter2D(Collision2D collision) {
-        print("Entered collision");
-        if (collision.collider.name.Equals("Crate(Clone)") ){
-            float playerTopEdge = col.bounds.max.y;
-            float playerLeftEdge = col.bounds.min.x;
-            float playerRightEdge = col.bounds.max.x;
-            ContactPoint2D contact = collision.contacts[0];
-            if (contact.point.y == playerTopEdge) {
-               print("Top collision");
-               Time.timeScale = 0;
-            }
-            //if side
-        }
         collided = true;
     }
     void OnCollisionStay2D(Collision2D collision) {
@@ -70,5 +58,12 @@ public class Movement : MonoBehaviour {
     }
     void OnCollisionExit2D() {
         collided = false;
+    }
+
+    void OnTriggerEnter2D(Collider2D other) {
+        print("Triggering");
+        if (other.name.Equals("Crate(Clone)")) {
+            Time.timeScale = 0;
+        }
     }
 }
