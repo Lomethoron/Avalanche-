@@ -20,9 +20,11 @@ public class CratePhysics : MonoBehaviour {
     void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.name.Equals("Ground")) {
             rb.bodyType = RigidbodyType2D.Static;
+            grounded = true;
         }
         else if (collision.gameObject.name.Equals("Crate(Clone)") && collision.gameObject.GetComponent<CratePhysics>().grounded) {
             rb.bodyType = RigidbodyType2D.Static;
+            grounded = true;
         }
     }
     void OnCollisionStay2D(Collision2D collision) {
