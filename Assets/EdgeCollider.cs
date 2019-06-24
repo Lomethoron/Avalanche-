@@ -7,24 +7,24 @@ using UnityEngine;
 public class EdgeCollider : MonoBehaviour {
 
     
-    private Movement.Side side;
+    private Player.Side side;
 
 	// Use this for initialization
 	void Start () {
         if( name.Equals("Left Collider")) {
-            side = Movement.Side.Left;
+            side = Player.Side.Left;
         }
         else if (name.Equals("Right Collider")) {
-            side = Movement.Side.Right;
+            side = Player.Side.Right;
         }
         else if (name.Equals("Top Collider")) {
-            side = Movement.Side.Top;
+            side = Player.Side.Top;
         }
         else if (name.Equals("Bottom Collider")) {
-            side = Movement.Side.Bottom;
+            side = Player.Side.Bottom;
         }
         else{
-            side = Movement.Side.None;
+            side = Player.Side.None;
         }
 
     }
@@ -36,7 +36,7 @@ public class EdgeCollider : MonoBehaviour {
 
     void OnCollisionStay2D(Collision2D collision) {
         print("Player colliding with " + collision.gameObject.name + " on the " + side + " side.");
-        transform.parent.gameObject.GetComponent<Movement>().collisionEnter(side, collision);
+        transform.parent.gameObject.GetComponent<Player>().collisionEnter(side, collision);
 
     }
 }
