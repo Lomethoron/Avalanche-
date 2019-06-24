@@ -35,7 +35,7 @@ public class EdgeCollider : MonoBehaviour {
 	}
 
     void OnCollisionStay2D(Collision2D collision) {
-        print("Player colliding with " + collision.gameObject.name + " on the " + side + " side.");
+        //print("Player colliding with " + collision.gameObject.name + " on the " + side + " side.");
         transform.parent.gameObject.GetComponent<Player>().collisionEnter(side, collision);
 
     }

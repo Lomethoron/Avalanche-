@@ -9,7 +9,7 @@ public class Player : MonoBehaviour {
 
     public Camera cam;
     public EdgeCollider2D leftCollider, rightCollider, topCollider, bottomCollider;
-    public GameObject stageController; 
+    private StageController stageController; 
      
     public enum Side { Left, Right, Top, Bottom, None };
 
@@ -24,7 +24,8 @@ public class Player : MonoBehaviour {
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
-        stageController = GameObject.FindWithTag("StageController");
+        //get the gameobject and then cast to its child type
+        stageController = GameObject.FindWithTag("StageController").GetComponent<StageController>();
         screenLeftEdge = cam.ViewportToWorldPoint(new Vector3(0, 0, cam.nearClipPlane)).x;
         screenRightEdge = cam.ViewportToWorldPoint(new Vector3(1, 1, cam.nearClipPlane)).x;
 
@@ -37,7 +38,7 @@ public class Player : MonoBehaviour {
     // Update is called once per frame
     void Update() {
         movement = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
-        if (Input.GetButtonDown("Jump")) print("Grounded on the " + side + " side." + "\nVector is " + movement);
+        //if (Input.GetButtonDown("Jump")) print("Grounded on the " + side + " side." + "\nVector is " + movement);
         if (Input.GetButtonDown("Jump") && side != Side.None) {
             switch (side) {
                 case Side.Left:
@@ -98,7 +99,7 @@ public class Player : MonoBehaviour {
             case Side.Top:
                 this.side = Side.Top;
                 if (other.collider.name.Equals("Crate(Clone)")) {
-                    Time.timeScale = 0;
+                    stageController.loseGame();
                 }
                 break;
             case Side.Bottom:
