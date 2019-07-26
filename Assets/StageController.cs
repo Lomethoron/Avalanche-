@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class StageController : MonoBehaviour {
 
@@ -12,6 +13,9 @@ public class StageController : MonoBehaviour {
         //get the gameobject and then cast to its child type
         spawner = GameObject.FindWithTag("Spawner").GetComponent<Spawner>();
         gameOverModal = GameObject.Find("Game Over Modal");
+        //Set the simulation time for the reset
+        //TODO:There should probably be a more advanced way of handling this rather than freezing the whole scene
+        Time.timeScale = 1;
 
     }
 	
@@ -28,5 +32,9 @@ public class StageController : MonoBehaviour {
         spawner.stopSpawning();
         //display game over
         gameOverModal.transform.GetChild(0).gameObject.SetActive(true);
+    }
+
+    public void reset() {
+        SceneManager.LoadScene("Climber");
     }
 }
