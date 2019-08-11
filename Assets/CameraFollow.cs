@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour {
     public Transform target;
-    public float playersAhead = 3;
+    public float playersAhead = 10;
     private float cameraForwardOffset;
 	// Use this for initialization
 	void Start () {
-        cameraForwardOffset = playersAhead * target.GetComponent<Collider2D>().bounds.size.y;
+        cameraForwardOffset = playersAhead * target.GetComponent<Renderer>().bounds.size.y;
+        print(target.GetComponent<Renderer>().bounds.size.y);
+        print(cameraForwardOffset);
 	}
 	
 	// Update is called once per frame

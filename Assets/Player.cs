@@ -37,7 +37,9 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        //if (Input.GetButtonDown("Jump")) print("Grounded on the " + side + " side." + "\nVector is currently " + movement);
         movement = new Vector3(Input.GetAxis("Horizontal"), 0, 0);
+        //if (Input.GetButtonDown("Jump")) print("Grounded on the " + side + " side." + "\nVector is currently " + movement);
         //if (Input.GetButtonDown("Jump")) print("Grounded on the " + side + " side." + "\nVector is " + movement);
         if (Input.GetButtonDown("Jump") && side != Side.None) {
             switch (side) {
@@ -62,12 +64,13 @@ public class Player : MonoBehaviour {
                     break;
             }
             //rb.AddForce(movement * speed);
-            //if (Input.GetButtonDown("Jump")) print("Grounded on the " + side + " side." + "\nVector is now " + movement);
+           // if (Input.GetButtonDown("Jump")) print("Grounded on the " + side + " side." + "\nVector is now " + movement);
         }
     }
 
     // FixedUpdate is called at a constant rate independent of framerate
     void FixedUpdate() {
+        //if (Input.GetButtonDown("Jump")) print("Adding movement.");
         rb.AddForce(movement * speed);
 
         // clamp to screen
@@ -86,7 +89,7 @@ public class Player : MonoBehaviour {
     }
 
     public void collisionEnter(Side side, Collision2D other) {
-        //print("function?");
+        //if (Input.GetButtonDown("Jump")) print("Entered Collision on "+side);
         switch (side) {
             case Side.Left:
                 this.side = Side.Left;
